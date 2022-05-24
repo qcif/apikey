@@ -21,6 +21,7 @@ import org.springframework.boot.actuate.health.DataSourceHealthIndicator
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.autoconfigure.flyway.FlywayDataSource
 import org.springframework.context.annotation.Bean
+import org.springframework.session.data.mongo.JdkMongoSessionConverter
 import org.springframework.session.data.redis.config.ConfigureRedisAction
 
 import javax.sql.DataSource
@@ -34,6 +35,12 @@ class Application extends GrailsAutoConfiguration {
     @Bean
     ConfigureRedisAction configureRedisAction() {
         ConfigureRedisAction.NO_OP
+    }
+
+    @ConditionalOnProperty(name='spring.session.store-type', havingValue = 'mongo')
+    @Bean
+    JdkMongoSessionConverter jdkMongoSessionConverter() {
+        return new JdkMongoSessionConverter();
     }
 
     @Bean

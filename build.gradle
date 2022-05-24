@@ -88,6 +88,8 @@ dependencies {
     compile 'org.grails.plugins:spring-session-helper:1.1'
     compile 'org.springframework.boot:spring-boot-starter-data-redis'
     compile 'org.springframework.session:spring-session-data-redis'
+    compile "org.springframework.boot:spring-boot-starter-data-mongodb"
+    compile 'org.springframework.session:spring-session-data-mongo'
 
     // Spring Security to secure actuator endpoints
     compile 'de.codecentric:spring-boot-admin-starter-client:1.5.3'
