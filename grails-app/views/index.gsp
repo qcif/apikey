@@ -17,9 +17,9 @@
 <!doctype html>
 <html>
 <head>
-    <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
+    <meta name="layout" content="${grailsApplication.config.getProperty('skin.layout')}"/>
     <meta name="section" content="home"/>
-    <title>API keys |  ${grailsApplication.config.skin.orgNameLong}</title>
+    <title>API keys |  ${grailsApplication.config.getProperty('skin.orgNameLong')}</title>
     <asset:stylesheet src="application.css" />
 </head>
 <body>
@@ -56,7 +56,7 @@
                         <g:select class="form-control" optionKey="name" optionValue="name" name="appName" from="${App.findAll()}" /><br/>
                     </div>
                     <p class="help-block">
-                        This is currently only available for ${grailsApplication.config.skin.orgNameLong} developers.<br/>
+                        This is currently only available for ${grailsApplication.config.getProperty('skin.orgNameLong')} developers.<br/>
                         These keys give <b>write</b> access to certain applications.
                     </p>
                     <g:submitButton name="Generate a key for this app" class="btn btn-primary"/>

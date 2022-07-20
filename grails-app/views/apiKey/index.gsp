@@ -16,11 +16,11 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
+    <meta name="layout" content="${grailsApplication.config.getProperty('skin.layout')}"/>
     <meta name="section" content="home"/>
     <meta name="breadcrumbParent" content="${g.createLink(uri:'/')},API Keys Home" />
     <meta name="breadcrumb" content="API Keys" />
-    <title>API keys |  ${grailsApplication.config.skin.orgNameLong}</title>
+    <title>API keys |  ${grailsApplication.config.getProperty('skin.orgNameLong')}</title>
     <asset:stylesheet src="application.css" />
 </head>
 <body>

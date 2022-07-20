@@ -17,7 +17,7 @@ import org.springframework.beans.factory.config.BeanDefinition
 
 // Place your Spring DSL code here
 beans = {
-    if (application.config.flyway.enabled) {
+    if (application.config.getProperty('spring.flyway.enabled')) {
 
         BeanDefinition hibernateDatastore = getBeanDefinition('hibernateDatastore')
         if (hibernateDatastore) {
