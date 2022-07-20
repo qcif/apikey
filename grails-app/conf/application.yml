@@ -229,7 +229,7 @@ environments:
             driverClassName: org.h2.Driver
             username: sa
             password: ""
-            url: "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
+            url: "jdbc:h2:mem:testDb;LOCK_TIMEOUT=10000"
     production:
         dataSource:
             dbCreate: validate
