@@ -18,5 +18,6 @@ after_success:
   - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && travis_retry ./gradlew publish'
 env:
   global:
+  - JAVA_TOOL_OPTIONS=-Dhttps.protocols=TLSv1.2
   - secure: GlvvIeoenszVNoFR5Or8MY6qp0M6HOr5injRgXzDuoevvfSGfqA+LtF1WLAzDqWpKMPP7doqJMCPhYJhOQS6Is0AhmJ9EEsLaIdkSZtxIRah8F2SlMfJcRENxLq12gSOZtwH0KipZ8qE6dhcB5026ZpOUPBEIscaG56Kv8hga0A=
   - secure: N57B+YOXMJY6QzC7ASuH1LwFmTAquAQYuDIoeslXUhPMEbbK9ZQfZQ6wveY0wmnwwtKyZR4tLzkNXXEOnDhwV+1qzzLI9SuofJukSjwmGr2uBcAIrTMzykgzjEzOlZpzZ+QgEYm/KydNctn9ezOHiGAQbmYbejMFw/dYunEQ9/U=
