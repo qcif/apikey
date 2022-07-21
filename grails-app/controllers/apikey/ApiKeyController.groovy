@@ -31,7 +31,7 @@ class ApiKeyController {
     def index() {
         def max = params.int('max', 100)
         def offset = params.int('offset', 0)
-        def sort = params.get('sort', 'app.name')
+        def sort = params.get('sort', 'app')
         def order = params.get('order', 'asc')
         def keys = apiKeyService.findAllKeys(sort, order, max, offset)
         respond keys

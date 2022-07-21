@@ -30,7 +30,7 @@
         <table class="table table-striped table-compact table-hover">
             <thead>
                 <tr>
-                    <g:sortableColumn property="app.name" title="App Name"/>
+                    <g:sortableColumn property="app" title="App Name"/>
                     <g:sortableColumn property="userId" title="User ID"/>
                     <g:sortableColumn property="userEmail" title="User Email"/>
                     <g:sortableColumn property="dateCreated" title="Date Created"/>
