@@ -102,9 +102,9 @@ dependencies {
     runtimeOnly 'org.codehaus.groovy:groovy-dateutil'
 
     // grails plugins
-    implementation "org.grails.plugins:ala-auth:5.1.0-SNAPSHOT"
-//    compile "org.grails.plugins:ala-admin-plugin:2.0"
-    implementation "org.grails.plugins:ala-bootstrap3:4.1.0-SNAPSHOT"
+    implementation "org.grails.plugins:ala-auth:5.1.0"
+//    compile "org.grails.plugins:ala-admin-plugin:2.3.0"
+    implementation "org.grails.plugins:ala-bootstrap3:4.1.0"
 
     implementation 'dk.glasius:external-config:3.0.1'
 
@@ -113,7 +113,7 @@ dependencies {
 //    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.session:spring-session-data-redis'
 //    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation 'org.grails.plugins:spring-session-helper:2.0.1-SNAPSHOT'
+    implementation 'org.grails.plugins:spring-session-helper:2.0.1'
     implementation 'org.mongodb:mongodb-driver-sync:4.6.0' // versions mismatch as transitive deps for
     implementation 'org.mongodb:mongodb-driver-core:4.6.0'
     implementation 'org.mongodb:bson:4.6.0'
