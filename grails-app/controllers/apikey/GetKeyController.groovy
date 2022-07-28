@@ -18,6 +18,8 @@ package apikey
 import au.org.ala.web.AlaSecured
 import au.org.ala.web.CASRoles
 
+import javax.transaction.Transactional
+
 class GetKeyController {
 
     def index() { }
@@ -25,6 +27,7 @@ class GetKeyController {
     LocalAuthService localAuthService
 
     @AlaSecured(value = CASRoles.ROLE_ADMIN, statusCode = 403, view = '/getKey/notCreated')
+    @Transactional
     def submit() {
         final userDetails = localAuthService.userDetails()
         final userId = userDetails[1]

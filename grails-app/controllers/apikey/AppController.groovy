@@ -19,6 +19,8 @@ import au.org.ala.web.AlaSecured
 import au.org.ala.web.CASRoles
 import au.org.ala.web.SSO
 
+import javax.transaction.Transactional
+
 class AppController {
 
     LocalAuthService localAuthService
@@ -27,6 +29,7 @@ class AppController {
 
     @SSO
     @AlaSecured(value = CASRoles.ROLE_ADMIN, statusCode = 403)
+    @Transactional
     def addAnApp() {
         def result = App.findByName(params.name)
         if (!result) {
