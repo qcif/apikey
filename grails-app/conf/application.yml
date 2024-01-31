@@ -115,10 +115,10 @@ grails:
                 staticparts: none
     cache:
         enabled: true
+        clearAtStartup: false
+        cacheManager: GrailsEhcacheCacheManager
         ehcache:
-            cacheManagerName: 'apikey-cache-manager'
             ehcacheXmlLocation: 'classpath:apikey-ehcache.xml'
-            reloadable: false
 endpoints:
     jmx:
         unique-names: true
