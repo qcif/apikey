@@ -1,4 +1,6 @@
 //import static org.springframework.boot.gradle.SpringBootPluginExtension.LayoutType.*
+import java.nio.file.Files
+import java.nio.file.Paths
 
 buildscript {
     repositories {
@@ -53,7 +55,9 @@ configurations {
 //}
 
 configurations.all {
-    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    resolutionStrategy {
+        cacheChangingModulesFor 0, 'seconds'
+    }
 }
 
 dependencies {
@@ -147,6 +151,33 @@ bootRun {
     sourceResources sourceSets.main
     String springProfilesActive = 'spring.profiles.active'
     systemProperty springProfilesActive, System.getProperty(springProfilesActive)
+
+    // Allow setting jvm args and system properties from the command line.
+    // Ref: https://docs.spring.io/spring-boot/docs/2.7.0/gradle-plugin/reference/htmlsingle/#running-your-application.passing-system-properties
+    // Set additional jvm args like this: ./gradlew bootRun -DcustomAddJvmArg.Dspring.output.ansi.enabled=never -DcustomAddJvmArg.Xmx1024m= -DcustomAddJvmArg.agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+    // Set additional system properties like this: ./gradlew bootRun -DcustomAddSysProp.spring.output.ansi.enabled=never -DcustomAddSysProp.thekey=thevalue
+    List<String> additionalJvmArgs = []
+    System.properties.each { k, v ->
+        def projPropKey = k?.toString()
+        def projPropValue = v?.toString()
+        if (projPropKey?.toString()?.startsWith("customAddJvmArg.")) {
+            def addJvmArg
+            if (projPropValue) {
+                addJvmArg = "-${projPropKey - "customAddJvmArg."}=${projPropValue}"
+            } else {
+                addJvmArg = "-${projPropKey - "customAddJvmArg."}"
+            }
+            println "Additional JVM arg '${addJvmArg}'"
+            additionalJvmArgs.add(addJvmArg)
+        }
+        if (projPropKey?.toString()?.startsWith("customAddSysProp.")) {
+            def key = projPropKey - "customAddSysProp."
+            systemProperty(key, projPropValue)
+            println "Additional System property '${key}=${projPropValue}'"
+        }
+    }
+    jvmArgs(jvmArgs + additionalJvmArgs)
+    println "All JVM args: ${jvmArgs}"
 }
 
 bootWar {
