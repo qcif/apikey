@@ -94,11 +94,11 @@ dependencies {
     testImplementation "org.mockito:mockito-core"
     testImplementation "org.grails:grails-web-testing-support"
     testImplementation "org.grails.plugins:geb"
-    testImplementation "org.seleniumhq.selenium:selenium-remote-driver:4.0.0"
-    testImplementation "org.seleniumhq.selenium:selenium-api:4.0.0"
-    testImplementation "org.seleniumhq.selenium:selenium-support:4.0.0"
-    testRuntimeOnly "org.seleniumhq.selenium:selenium-chrome-driver:4.0.0"
-    testRuntimeOnly "org.seleniumhq.selenium:selenium-firefox-driver:4.0.0"
+    testImplementation "org.seleniumhq.selenium:selenium-remote-driver:$seleniumVersion"
+    testImplementation "org.seleniumhq.selenium:selenium-api:$seleniumVersion"
+    testImplementation "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
+    testRuntimeOnly "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
+    testRuntimeOnly "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
 
     // Groovy backwards compat
     runtimeOnly 'org.codehaus.groovy:groovy-dateutil'
@@ -174,15 +174,48 @@ webdriverBinaries {
     }
 }
 
+
 tasks.withType(Test) {
     systemProperty "geb.env", System.getProperty('geb.env')
     systemProperty "geb.build.reportsDir", reporting.file("geb/integrationTest")
-    if (!System.getenv().containsKey('GITHUB_ACTIONS')) {
-        systemProperty 'webdriver.chrome.driver', System.getProperty('webdriver.chrome.driver')
-        systemProperty 'webdriver.gecko.driver', System.getProperty('webdriver.gecko.driver')
+    beforeTest { descriptor ->
+        logger.quiet " -- $descriptor"
+    }
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat 'full'
+        showStandardStreams true
+    }
+
+    // --- Chrome / Chromium driver path ---
+
+    def chromeDriverPath = [
+            System.getProperty('webdriver.chrome.driver'),
+            "${System.getenv('CHROMEWEBDRIVER')}/chromedriver".toString(),
+            "node_modules/chromedriver/bin/chromedriver".toString(),
+            "/usr/bin/chromedriver",
+            "/usr/local/bin/chromedriver",
+    ].find { it && Files.exists(Paths.get(it)) }
+    if (chromeDriverPath) {
+        systemProperty 'webdriver.chrome.driver', chromeDriverPath
     } else {
-        systemProperty 'webdriver.chrome.driver', "${System.getenv('CHROMEWEBDRIVER')}/chromedriver"
-        systemProperty 'webdriver.gecko.driver', "${System.getenv('GECKOWEBDRIVER')}/geckodriver"
+        println "Could not locate chrome driver."
+    }
+
+    // --- FireFox driver path ---
+
+    def geckoDriverPath = [
+            System.getProperty('webdriver.gecko.driver'),
+            "${System.getenv('GECKOWEBDRIVER')}/geckodriver".toString(),
+            "node_modules/geckodriver/bin/geckodriver".toString(),
+            "node_modules/geckodriver/geckodriver".toString(),
+            "/usr/bin/geckodriver",
+            "/usr/local/bin/geckodriver",
+    ].find { it && Files.exists(Paths.get(it)) }
+    if (geckoDriverPath) {
+        systemProperty 'webdriver.gecko.driver', geckoDriverPath
+    } else {
+        println "Could not locate gecko driver."
     }
 }
 
